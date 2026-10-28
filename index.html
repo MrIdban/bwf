@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BioWatch India - Digital monitoring of threatened species and biodiversity conservation.">
+  <title>BioWatch India | Biodiversity Monitoring & Conservation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <nav class="nav container">
+    <a class="logo" href="#home"><span>🐾</span> BioWatch <b>India</b></a>
+    <div class="nav-controls">
+      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Night Patrol Mode" title="Toggle Night Patrol Mode">
+        <span class="theme-icon">🌙</span> <span class="theme-label">Night Patrol</span>
+      </button>
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation menu">☰</button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#species">Species</a></li>
+      <li><a href="#monitoring">Monitoring</a></li>
+      <li><a href="#map">Map</a></li>
+      <li><a href="#sightings">Sightings</a></li>
+      <li><a href="#threats">Threats</a></li>
+      <li><a href="#conservation">Conservation</a></li>
+      <li><a href="#about">About</a></li>
+      <li class="nav-action">
+        <button class="btn nav-btn" onclick="openSightingModal()">+ Report Sighting</button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section id="home" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <p class="eyebrow">🇮🇳 INDIA'S DIGITAL BIODIVERSITY INITIATIVE</p>
+      <h1>Protecting Wildlife<br><span>Through Technology</span></h1>
+      <p class="hero-text">
+        Discover, monitor and safeguard India's threatened biodiversity using
+        camera traps, telemetry GPS, satellite surveys, and community observations.
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#species">Explore Species →</a>
+        <a class="btn secondary" href="#map">Interactive Map</a>
+        <button class="btn report-hero-btn" onclick="openSightingModal()">+ Log Field Observation</button>
+      </div>
+      <div class="hero-mini-stats">
+        <div><strong>1,284+</strong><span>Camera records</span></div>
+        <div><strong>843+</strong><span>GPS observations</span></div>
+        <div><strong>28</strong><span>States & UTs</span></div>
+        <div><strong>12+</strong><span>Protected Corridors</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIES EXPLORER SECTION -->
+  <section id="species" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow dark">SPECIES EXPLORER</p>
+          <h2>Threatened Species</h2>
+        </div>
+        <p>Explore representative wildlife and flora monitored across India's diverse ecosystems.</p>
+      </div>
+
+      <!-- Controls: Search bar & Multi-Criteria Filters -->
+      <div class="explorer-controls">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="speciesSearch" placeholder="Search by name, scientific name, or habitat..." aria-label="Search species">
+        </div>
+
+        <div class="filter-controls-wrap">
+          <div class="filter-row" id="typeFilters">
+            <button class="filter active" data-filter="all">All Types</button>
+            <button class="filter" data-filter="mammal">Mammals</button>
+            <button class="filter" data-filter="bird">Birds</button>
+            <button class="filter" data-filter="reptile">Reptiles</button>
+            <button class="filter" data-filter="plant">Plants</button>
+          </div>
+
+          <div class="status-filter-wrap">
+            <label for="statusFilter" class="filter-label">IUCN Status:</label>
+            <select id="statusFilter" class="status-select" aria-label="Filter by IUCN Conservation Status">
+              <option value="all">All Statuses</option>
+              <option value="Endangered">Endangered</option>
+              <option value="Vulnerable">Vulnerable</option>
+              <option value="Critically Endangered">Critically Endangered</option>
+              <option value="Threatened">Threatened</option>
+              <option value="Least Concern">Least Concern</option>
+            </select>
+          </div>
+
+          <div class="export-wrap">
+            <button class="btn export-btn" id="exportCsvBtn" title="Download dataset as CSV">
+              📥 Export Dataset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-info" id="resultsCount">Showing all monitored species</div>
+
+      <div class="cards" id="speciesGrid">
+        <!-- Dynamically rendered via script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- MONITORING DASHBOARD SECTION -->
+  <section id="monitoring" class="dark-section">
+    <div class="container">
+      <div class="section-heading light">
+        <div>
+          <p class="eyebrow">MONITORING DASHBOARD</p>
+          <h2>Wildlife Data at a Glance</h2>
+        </div>
+        <p>Multiple digital technologies bring field observations together in one monitoring workflow.</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span>📷</span><strong data-target="1284">0</strong><small>Camera Trap Records</small></div>
+        <div class="stat"><span>📍</span><strong data-target="843">0</strong><small>GPS Observations</small></div>
+        <div class="stat"><span>🛰️</span><strong data-target="426">0</strong><small>Satellite Surveys</small></div>
+        <div class="stat"><span>🧬</span><strong data-target="217">0</strong><small>eDNA Samples</small></div>
+      </div>
+
+      <div class="tech-grid">
+        <div class="tech"><b>📷 Camera Traps</b><span>Automated night-vision motion sensors</span></div>
+        <div class="tech"><b>📍 GPS Tracking</b><span>Corridor movement & telemetry logs</span></div>
+        <div class="tech"><b>🛰️ Satellite</b><span>Canopy density & landscape change</span></div>
+        <div class="tech"><b>🧬 eDNA</b><span>Aquatic & soil species identification</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE MAP SECTION -->
+  <section id="map" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow dark">INTERACTIVE FIELD MAP</p>
+          <h2>Regional Surveillance Zones</h2>
+        </div>
+        <p>Click on any regional monitoring station to view live telemetry, camera traps, and local biodiversity telemetry.</p>
+      </div>
+
+      <div class="map-layout">
+        <div class="india-map" id="indiaMapContainer" aria-label="Interactive India monitoring map">
+          <div class="map-title">INDIA</div>
+          
+          <!-- Region Pins -->
+          <button class="pin pin-uttarakhand active" data-region="Uttarakhand" title="Uttarakhand: Corbett & Rajaji" aria-label="Uttarakhand monitoring station">
+            <span class="pin-pulse"></span>
+            <span class="pin-dot">●</span>
+          </button>
+          
+          <button class="pin pin-assam" data-region="Assam" title="Assam: Kaziranga & Manas" aria-label="Assam monitoring station">
+            <span class="pin-pulse"></span>
+            <span class="pin-dot">●</span>
+          </button>
+
+          <button class="pin pin-bengal" data-region="West Bengal" title="West Bengal: Sundarbans & Dooars" aria-label="West Bengal monitoring station">
+            <span class="pin-pulse"></span>
+            <span class="pin-dot">●</span>
+          </button>
+
+          <button class="pin pin-karnataka" data-region="Karnataka" title="Karnataka: Western Ghats & Nagarhole" aria-label="Karnataka monitoring station">
+            <span class="pin-pulse"></span>
+            <span class="pin-dot">●</span>
+          </button>
+
+          <button class="pin pin-gujarat" data-region="Gujarat" title="Gujarat: Gir Forest & Marine Sanctuary" aria-label="Gujarat monitoring station">
+            <span class="pin-pulse"></span>
+            <span class="pin-dot">●</span>
+          </button>
+
+          <div class="map-note">Click pins to inspect regional reserves</div>
+        </div>
+
+        <div class="map-panel" id="mapDetailPanel">
+          <!-- Populated dynamically via script.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITIZEN SCIENCE & FIELD SIGHTINGS LOG -->
+  <section id="sightings" class="section soft">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow dark">COMMUNITY SCIENCE</p>
+          <h2>Field Observation Log</h2>
+        </div>
+        <div class="sighting-header-actions">
+          <p>Recent wildlife sightings submitted by rangers, researchers, and citizen naturalists.</p>
+          <button class="btn primary" onclick="openSightingModal()">+ Record New Observation</button>
+        </div>
+      </div>
+
+      <div class="sightings-filter-row">
+        <span class="sighting-stat-badge" id="sightingTotalCount">4 Observations Logged</span>
+        <button class="btn small-btn outline" id="resetSightingsBtn">Restore Defaults</button>
+      </div>
+
+      <div class="sightings-grid" id="sightingsFeed">
+        <!-- Rendered dynamically from localStorage -->
+      </div>
+    </div>
+  </section>
+
+  <!-- THREATS SECTION -->
+  <section id="threats" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow dark">ECOLOGICAL PRESSURES</p>
+          <h2>Monitored Threats</h2>
+        </div>
+        <p>Telemetry and GIS analytics identify vulnerabilities before severe ecological degradation occurs.</p>
+      </div>
+      <div class="threat-grid">
+        <div class="threat">
+          <span>🌲</span>
+          <h3>Habitat Loss</h3>
+          <p>Multi-spectral satellite sensors track forest encroachment and buffer zone degradation.</p>
+          <span class="threat-level severe">Critical Threat</span>
+        </div>
+        <div class="threat">
+          <span>🛣️</span>
+          <h3>Corridor Fragmentation</h3>
+          <p>GPS tracking models analyze animal crossing choke points along railway and highway corridors.</p>
+          <span class="threat-level high">High Impact</span>
+        </div>
+        <div class="threat">
+          <span>🌡️</span>
+          <h3>Climate Shifts</h3>
+          <p>Thermal sensors and weather station networks correlate shifting monsoons with migration anomalies.</p>
+          <span class="threat-level moderate">Moderate Impact</span>
+        </div>
+        <div class="threat">
+          <span>🚨</span>
+          <h3>Human-Wildlife Friction</h3>
+          <p>Acoustic and thermal tripwires warn forest fringes about approaching herd migrations in real time.</p>
+          <span class="threat-level high">High Impact</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSERVATION WORKFLOW -->
+  <section id="conservation" class="conservation">
+    <div class="container conservation-inner">
+      <div>
+        <p class="eyebrow">CONSERVATION PROTOCOL</p>
+        <h2>From Field Data to Targeted Action</h2>
+        <p>BioWatch India converts disparate digital field telemetry into actionable enforcement, habitat corridors, and protection policies.</p>
+      </div>
+      <div class="steps">
+        <div><b>01</b><span>Collect</span><small>Camera traps, GPS collars, drones & community science.</small></div>
+        <div><b>02</b><span>Analyze</span><small>Automated classification and spatial pattern correlation.</small></div>
+        <div><b>03</b><span>Monitor</span><small>Continuous temporal indicators for herd and pack health.</small></div>
+        <div><b>04</b><span>Enforce</span><small>Anti-poaching patrol routing and corridor restoration.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="section soft">
+    <div class="container about">
+      <p class="eyebrow dark">ABOUT THE INITIATIVE</p>
+      <h2>Pioneering Open Conservation</h2>
+      <p>
+        BioWatch India is an educational platform demonstrating how modern digital monitoring technologies—GPS
+        telemetry, camera-trap analytics, GIS landscape mapping, and community observations—combine to protect
+        fragile ecosystems across the subcontinent.
+      </p>
+      <div class="about-actions">
+        <a class="btn primary" href="#species">Browse Wildlife</a>
+        <a class="btn secondary-dark" href="#home">Back to top ↑</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-content">
+    <div>
+      <strong>🐾 BioWatch India</strong>
+      <p>Digital Biodiversity Monitoring & Landscape Conservation Project.</p>
+    </div>
+    <div class="footer-links">
+      <span>Built for field scientists & wildlife enthusiasts</span>
+      <p>© 2026 BioWatch India · Educational Open Demonstration</p>
+    </div>
+  </div>
+</footer>
+
+<!-- SPECIES DETAIL MODAL -->
+<div class="modal" id="speciesModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="close" onclick="closeSpeciesModal()" aria-label="Close modal">×</button>
+    <p class="eyebrow dark" id="modalCategory">SPECIES DOSSIER</p>
+    <div class="modal-header-row">
+      <div>
+        <h2 id="modalTitle">Species Name</h2>
+        <p class="scientific" id="modalScientific">Scientific name</p>
+      </div>
+      <span class="tag" id="modalStatusTag">Status</span>
+    </div>
+
+    <div class="modal-body-content">
+      <div class="modal-icon-badge" id="modalEmoji">🐾</div>
+      <p id="modalDescription" class="modal-desc"></p>
+      
+      <div class="modal-spec-grid">
+        <div>
+          <b>Habitat</b>
+          <span id="modalHabitat">-</span>
+        </div>
+        <div>
+          <b>Key Reserves</b>
+          <span id="modalReserves">-</span>
+        </div>
+        <div>
+          <b>Population Est.</b>
+          <span id="modalPopulation">-</span>
+        </div>
+        <div>
+          <b>Monitoring Tech</b>
+          <span id="modalTech">-</span>
+        </div>
+      </div>
+
+      <div class="modal-audio-section">
+        <button class="btn audio-play-btn" id="modalAudioBtn" onclick="playCurrentModalSound()">
+          <span>🔊</span> Play Wildlife Vocalization
+        </button>
+        <span class="audio-status" id="modalAudioStatus">Synthesized acoustic sample ready</span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn primary" onclick="closeSpeciesModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- SIGHTING REPORT MODAL -->
+<div class="modal" id="sightingModal" aria-hidden="true" role="dialog" aria-labelledby="sightingModalTitle">
+  <div class="modal-box sighting-modal-box">
+    <button class="close" onclick="closeSightingModal()" aria-label="Close modal">×</button>
+    <p class="eyebrow dark">FIELD CONTRIBUTION</p>
+    <h2 id="sightingModalTitle">Log a Wildlife Sighting</h2>
+    <p class="modal-subtitle">Submit your verified observation to help expand the digital conservation network.</p>
+
+    <form id="sightingForm" onsubmit="handleSightingSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="formSpecies">Species Observed *</label>
+          <input type="text" id="formSpecies" list="speciesDatalist" required placeholder="e.g., Bengal Tiger, Indian Peafowl">
+          <datalist id="speciesDatalist">
+            <option value="Bengal Tiger"></option>
+            <option value="Asian Elephant"></option>
+            <option value="Indian Rhinoceros"></option>
+            <option value="Indian Peafowl"></option>
+            <option value="Mugger Crocodile"></option>
+            <option value="Gharial"></option>
+            <option value="Snow Leopard"></option>
+            <option value="Lion-tailed Macaque"></option>
+            <option value="Great Indian Bustard"></option>
+            <option value="Native Forest Flora"></option>
+          </datalist>
+        </div>
+
+        <div class="form-group">
+          <label for="formCategory">Category *</label>
+          <select id="formCategory" required>
+            <option value="mammal">Mammal</option>
+            <option value="bird">Bird</option>
+            <option value="reptile">Reptile</option>
+            <option value="plant">Flora / Plant</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="formRegion">Location / State *</label>
+          <input type="text" id="formRegion" required placeholder="e.g. Corbett TR, Uttarakhand">
+        </div>
+
+        <div class="form-group">
+          <label for="formDate">Observation Date *</label>
+          <input type="date" id="formDate" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="formObserver">Observer Name or Role *</label>
+          <input type="text" id="formObserver" required placeholder="e.g., Ranger Sharma / Naturalist">
+        </div>
+
+        <div class="form-group">
+          <label for="formCount">Individual Count</label>
+          <input type="number" id="formCount" min="1" max="100" value="1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formNotes">Field Notes & Behavioral Context</label>
+        <textarea id="formNotes" rows="3" placeholder="Describe habitat conditions, juvenile presence, movement direction, or signs of stress..."></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn secondary-dark" onclick="closeSightingModal()">Cancel</button>
+        <button type="submit" class="btn primary">Submit Observation</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
